@@ -14,6 +14,11 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssemblies(assemblies);
 });
 
+builder.Services.AddMarten(opts =>
+{
+    opts.Connection(builder.Configuration.GetConnectionString("Database")!);
+}).UseLightweightSessions();
+
 var app = builder.Build();
 app.MapCarter();
 // config the HTTP request pipline
