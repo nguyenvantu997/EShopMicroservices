@@ -1,8 +1,6 @@
-﻿using BuildingBlocks.CQRS;
-
-namespace Catalog_API.Features.Products.CreateProduct
+﻿namespace Catalog_API.Features.Products.CreateProduct
 {
-    public record CreateProductRequest(string Name, List<string> Category, string Description, string ImageFile, decimal Price) : ICommand<CreateProductResponse>;
+    public record CreateProductRequest(string Name, Guid CategoryId, string Description, string ImageFile, decimal Price);
     public record CreateProductResponse(Guid Id);
     public class CreateProductEndpoint : ICarterModule
     {
