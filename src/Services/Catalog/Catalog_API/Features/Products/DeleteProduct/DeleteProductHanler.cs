@@ -21,7 +21,7 @@ namespace Catalog_API.Features.Products.DeleteProduct
 
             var product = await _documentSession.LoadAsync<Product>(request.Id);
             if (product == null)
-                throw new ProductNotFoundException();
+                throw new ProductNotFoundException(request.Id);
 
             _documentSession.Delete(product);
             await _documentSession.SaveChangesAsync();

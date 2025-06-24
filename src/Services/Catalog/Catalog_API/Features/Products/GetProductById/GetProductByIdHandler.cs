@@ -22,7 +22,7 @@ namespace Catalog_API.Features.Products.GetProductById
 
             var product = await _documentSession.LoadAsync<Product>(request.Id);
             if (product == null)
-                throw new ProductNotFoundException();
+                throw new ProductNotFoundException(request.Id);
 
             return new GetProductByIdResult(product);
         }

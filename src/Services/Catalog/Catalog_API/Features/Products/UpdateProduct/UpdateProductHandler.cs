@@ -20,7 +20,7 @@ namespace Catalog_API.Features.Products.UpdateProduct
 
             var product = await _session.LoadAsync<Product>(command.Id);
             if (product == null)
-                throw new ProductNotFoundException();
+                throw new ProductNotFoundException(command.Id);
 
             product.Name = command.Name;
             product.CategoryId = command.CategoryId;
