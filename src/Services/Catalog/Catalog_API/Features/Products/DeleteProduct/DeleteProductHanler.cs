@@ -8,17 +8,13 @@ namespace Catalog_API.Features.Products.DeleteProduct
     public class DeleteProductHanler : ICommandHanlder<DeleteProductCommand, DeleteProductResult>
     {
         private readonly IDocumentSession _documentSession;
-        private readonly ILogger<DeleteProductHanler> _logger;
 
-        public DeleteProductHanler(IDocumentSession documentSession, ILogger<DeleteProductHanler> logger)
+        public DeleteProductHanler(IDocumentSession documentSession)
         {
             _documentSession = documentSession;
-            _logger = logger;
         }
         public async Task<DeleteProductResult> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Delete product command handle called {@query}", request.Id);
-
             var product = await _documentSession.LoadAsync<Product>(request.Id);
             if (product == null)
                 throw new ProductNotFoundException(request.Id);

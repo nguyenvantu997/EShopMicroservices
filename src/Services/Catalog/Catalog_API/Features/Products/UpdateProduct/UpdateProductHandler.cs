@@ -7,17 +7,13 @@ namespace Catalog_API.Features.Products.UpdateProduct
     public class UpdateProductHandler : ICommandHanlder<UpdateProductCommand, UpdateProductResult>
     {
         private readonly IDocumentSession _session;
-        private readonly ILogger<UpdateProductHandler> _logger;
-        public UpdateProductHandler(IDocumentSession session, ILogger<UpdateProductHandler> logger)
+        public UpdateProductHandler(IDocumentSession session)
         {
             _session = session;
-            _logger = logger;
         }
 
         public async Task<UpdateProductResult> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Update product handle called {@command}", command);
-
             var product = await _session.LoadAsync<Product>(command.Id);
             if (product == null)
                 throw new ProductNotFoundException(command.Id);

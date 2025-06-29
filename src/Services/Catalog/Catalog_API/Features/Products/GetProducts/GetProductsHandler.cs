@@ -1,36 +1,45 @@
 ﻿using JasperFx.Core.Reflection;
 using Marten.Linq;
+using Marten.Pagination;
 
 namespace Catalog_API.Features.Products.GetProducts
 {
-    public record GetProductsQuery(Guid? CategoryId) : IQuery<GetProductsResult>;
+    public record GetProductsQuery(Guid? CategoryId, int? PageNumber = 1, int? PageSize = 10, bool IsGetAll = false) : IQuery<GetProductsResult>;
 
-    public record GetProductsResult(IEnumerable<Product> Products);
+    public record GetProductsResult(IEnumerable<Product> Products, long TotalItem, bool HasNextPage);
 
     internal class GetProductsHandler : IQueryHandler<GetProductsQuery, GetProductsResult>
     {
         private readonly IDocumentSession _documentSession;
-        private readonly ILogger<GetProductsHandler> _logger;
 
-        public GetProductsHandler(IDocumentSession documentSession, ILogger<GetProductsHandler> logger)
+        public GetProductsHandler(IDocumentSession documentSession)
         {
             _documentSession = documentSession;
-            _logger = logger;
         }
 
         public async Task<GetProductsResult> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Get products query handle called {@query}", "");
-
             var query = _documentSession.Query<Product>();
 
             var filtered = request.CategoryId.HasValue
                 ? query.Where(p => p.CategoryId == request.CategoryId.Value)
                 : query;
 
-            var products = await filtered.ToListAsync(cancellationToken);
+            IEnumerable<Product> products = new List<Product>();
+            long total = 0;
+            bool hasNextPage;
+            if (request.IsGetAll)
+            {
+                products = await filtered.ToListAsync(cancellationToken);
+                total = filtered.Count();
+                return new GetProductsResult(products, total, false);
+            }
 
-            return new GetProductsResult(products);
+            var productPages = await filtered.ToPagedListAsync(request.PageNumber ?? 1, request.PageSize ?? 10, cancellationToken);
+            total = productPages.TotalItemCount;
+            hasNextPage = productPages.HasNextPage;
+
+            return new GetProductsResult(productPages, total, hasNextPage);
         }
     }
 }
