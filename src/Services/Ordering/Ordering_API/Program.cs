@@ -14,4 +14,9 @@ var app = builder.Build();
 
 app.UseApiService();
 
+if (app.Environment.IsDevelopment())
+{
+    await app.InitialiseDatabaseAsync();
+}
+
 app.Run();
