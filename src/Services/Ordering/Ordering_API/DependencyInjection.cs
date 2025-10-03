@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Carter;
+using Microsoft.EntityFrameworkCore;
 using Ordering.Infrastructure.Data;
 using Ordering.Infrastructure.Data.Extensions;
 
@@ -8,11 +9,15 @@ namespace Ordering_API
     {
         public static IServiceCollection AddApiServices(this IServiceCollection services)
         {
+            services.AddCarter();
+
             return services;
         }
 
         public static WebApplication UseApiService(this WebApplication app)
         {
+            app.MapCarter();
+
             return app;
         }
 

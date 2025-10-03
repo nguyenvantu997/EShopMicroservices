@@ -40,9 +40,8 @@ namespace Ordering.Application.Orders.Commands.UpdateOrder
                 shippingAddress: shippingAddress,
                 billingAddress: billingAddress,
                 payment: payment,
-                status: orderDto.status
+                status: orderDto.Status
                 );
-            throw new NotImplementedException();
         }
     }
 }

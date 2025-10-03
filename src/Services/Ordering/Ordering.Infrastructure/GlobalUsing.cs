@@ -1,0 +1,11 @@
+﻿global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.ChangeTracking;
+global using Microsoft.EntityFrameworkCore.Diagnostics;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Ordering.Application.Data;
+global using Ordering.Domain.Abtractions;
+global using Ordering.Domain.Enums;
+global using Ordering.Domain.Models;
+global using Ordering.Domain.ValueObjects;
+global using System.Reflection;

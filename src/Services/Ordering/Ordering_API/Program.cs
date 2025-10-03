@@ -5,10 +5,11 @@ using Ordering_API;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServices()
+builder.Services
+    .AddApplicationServices()
     .AddInfrastructureServices(builder.Configuration)
     .AddDomainServices()
-    .AddApplicationServices();
+    .AddApiServices();
 
 var app = builder.Build();
 

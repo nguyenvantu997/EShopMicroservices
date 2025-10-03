@@ -1,7 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-
-namespace Ordering.Infrastructure.Data.Extensions
+﻿namespace Ordering.Infrastructure.Data.Extensions
 {
     public static class DatabaseExtensions
     {
