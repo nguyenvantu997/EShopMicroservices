@@ -14,7 +14,7 @@ namespace Basket_API.Features.Basket.CheckoutBasket
         {
             app.MapPost("/basket/checkout", async (CheckoutBasketRequest request, ISender sender) =>
             {
-                var result = await sender.Send(new CheckoutBasketCommand(request));
+                var result = await sender.Send(new CheckoutBasketCommand(request.Dto));
 
                 var response = result.Adapt<CheckoutBasketResponse>();
 

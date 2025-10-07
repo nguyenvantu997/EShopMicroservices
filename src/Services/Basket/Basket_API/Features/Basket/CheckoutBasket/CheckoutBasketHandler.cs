@@ -20,7 +20,6 @@ namespace Basket_API.Features.Basket.CheckoutBasket
     {
         public async Task<CheckoutBasketResult> Handle(CheckoutBasketCommand command, CancellationToken cancellationToken)
         {
-            //281
             var basket = await basketRepository.GetBasketAsync(command.Dto.Username, cancellationToken);
 
             if (basket == null)
